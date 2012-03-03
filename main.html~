@@ -19,6 +19,9 @@
 		font-weight: bold;
 		font-size: 70px;
 	}
+	#temp span {
+		
+	}
 	#loc {
 		color: black;
 		font-size: 20px;
@@ -43,15 +46,12 @@
 		right: 44px;	
 	}
 	</style>
-	<body>
+	<body onload="setBackground()">
 		<div id="temp">{{ temperature }}<span>&ordm;</span></div>
 		<span id="condition">{{ condition }}</span>
 		<form>
 			<input id="loc" type="text" name="location" value="{{ city }}" />
 		</form>
-		<div id="info">
-			<span class="date"><strong>Taken:</strong> October 5, 2009</span><br/>
-			<span class="author"><strong>Original Picture:</strong> <a href="{{link}}">Flickr</a></span>
-		</div>
+		<div id="info"><span class="date"><strong>Taken:</strong> October 5, 2009</span><br/><span class="author"><strong>Photo by:</strong> <a href="{{link}}">Luke Macahan</a></span></div>
 	</body>
 </html>
