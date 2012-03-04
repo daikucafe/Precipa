@@ -2,11 +2,6 @@
 <html>
 	<head>
 		<title>Precipa - {{ city }}</title>
-		<script>
-		function setBackground(){
-			var body = document.getElementsByTagName("body")[0];
-		}
-		</script>
 	</head>
 	<style>
 	body{
@@ -14,7 +9,6 @@
 		font-size: 11px;
 		background: black;
 		background-image: url("{{ photo }}");
-	/*	background-image: url("http://farm3.staticflickr.com/2632/3992707323_6060b3efab_o.jpg"); */
 		background-size: 100%;
 		color: white;
 	}
@@ -24,9 +18,6 @@
 		right: 15px;
 		font-weight: bold;
 		font-size: 70px;
-	}
-	#temp span {
-		
 	}
 	#loc {
 		color: black;
@@ -52,12 +43,15 @@
 		right: 44px;	
 	}
 	</style>
-	<body onload="setBackground()">
+	<body>
 		<div id="temp">{{ temperature }}<span>&ordm;</span></div>
 		<span id="condition">{{ condition }}</span>
 		<form>
 			<input id="loc" type="text" name="location" value="{{ city }}" />
 		</form>
-		<div id="info"><span class="date"><strong>Taken:</strong> October 5, 2009</span><br/><span class="author"><strong>Photo by:</strong> <a href="{{link}}">Luke Macahan</a></span></div>
+		<div id="info">
+			<span class="date"><strong>Taken:</strong> October 5, 2009</span><br/>
+			<span class="author"><strong>Original Picture:</strong> <a href="{{link}}">Flickr</a></span>
+		</div>
 	</body>
 </html>

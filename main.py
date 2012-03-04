@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 #
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+#Precipa is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
 
+#Precipa is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with Precipa.  If not, see <http://www.gnu.org/licenses/>
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
@@ -25,7 +22,7 @@ import os
 import random
 import re
 
-class MainHandler(webapp.RequestHandler):
+class Precipa(webapp.RequestHandler):
 	flickr_api_key = "7c04ca9148bb66f16350a3243fcaf77d"
 	flickr_api_secret = "b8e62385362ea137"
 	
@@ -52,8 +49,7 @@ class MainHandler(webapp.RequestHandler):
 						break;
 		else:
 			self.response.out.write("City not found...")
-		###
-	#Retorna una lista con las ciudades encontradas
+	
 	def get_city_list(self, cityname):
 		name = cityname.replace(" ", "%20");
 		data = urllib2.urlopen("http://where.yahooapis.com/geocode?q=" + name).read()
@@ -72,8 +68,7 @@ class MainHandler(webapp.RequestHandler):
 				w_list.append(w_dict);
 			return w_list
 		return False
-		
-	#Retorna la condicion y temperatura de una ciudad segun su WOEID
+	
 	def get_city_weather(self, woeid):
 		data = urllib2.urlopen("http://weather.yahooapis.com/forecastrss?u=c&w="+str(woeid)).read()
 		parsed_data = xml.dom.minidom.parseString(data)
@@ -91,7 +86,7 @@ class MainHandler(webapp.RequestHandler):
 			return w_list
 		return False
 		
-	#Retorna la lista de fotografias asociadas a la ciudad con la condicion
+	
 	def get_photos(self, city_info):
 	
 		params = {
@@ -121,8 +116,6 @@ class MainHandler(webapp.RequestHandler):
 			return urls_list
 		return False
 
-
-#Aisle la pagina, por motivos de testing. Se llama desde /secret?id=id_de_foto (sin valor default)
 class GetOSecret(webapp.RequestHandler):
 	def get(self):
 		photo_id = self.request.get("id")
@@ -132,8 +125,6 @@ class GetOSecret(webapp.RequestHandler):
 		else:
 			self.response.out.write("No existe original")
 			
-		
-	#Retorna el osecret de una foto en caso de existir. En caso contrario, devuelve False.	
 	def get_osecret(self, id):
 		uri = "http://flickr.com/photo.gne?id="+str(id)
 		data = urllib2.urlopen(uri).read()
@@ -144,10 +135,7 @@ class GetOSecret(webapp.RequestHandler):
 			return m.group(0).split("_")[1]
 
 def main():
-	application = webapp.WSGIApplication([('/', MainHandler),
-											('/secret', GetOSecret),
-										],
-										debug=True)
+	application = webapp.WSGIApplication([('/', Precipa), ('/secret', GetOSecret),], debug=True)
 	util.run_wsgi_app(application)
 
 if __name__ == '__main__':
